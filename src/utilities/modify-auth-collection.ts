@@ -1,10 +1,7 @@
 import { AuthStrategy, type CollectionConfig } from "payload";
 import { createAuthStrategy } from "./Auth0Strategy";
-// import { createAuthorizeEndpoint } from "./authorize-endpoint";
 
 import { PluginTypes } from "../types";
-// import { createAuth0Endpoints } from "./Auth0/authorize-endpoint";
-// import { createCallbackEndpoint } from "./Auth0/callback-endpoint";
 
 export const modifyAuthCollection = (
   pluginOptions: PluginTypes,

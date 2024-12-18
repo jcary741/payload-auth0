@@ -24,20 +24,37 @@
 
 # Installation
 
-ENV fields needed: (subject to change an updates)
+This package uses the [NextJs Auth0](https://github.com/auth0/nextjs-auth0) plugin currently a beta version and adds the Payload Auth around it so
+that it can use the payload cookie auth.
+
+From the Nextjs Auth0 package:
+
+Add the following environment variables to your `.env.local` file:
+
 ```dotenv
-AUTH0_SECRET='{STRING}'
-AUTH0_BASE_URL='http://{URL}.com'
-AUTH0_ISSUER_BASE_URL='https://xxx-xxxxxxxxxxxxx.xx.auth0.com'
-AUTH0_CLIENT_ID='{STRING}'
-AUTH0_CLIENT_SECRET='{STRING}'
-AUTH0_CALLBACK="/api/users/auth/callback"
-
-
-AUTH0_DOMAIN='xxx-xxxxxxxxxxxxx.xx.auth0.com'
-APP_BASE_URL='https://{URL}.com'```
-
+AUTH0_DOMAIN=
+AUTH0_CLIENT_ID=
+AUTH0_CLIENT_SECRET=
+AUTH0_SECRET=
+APP_BASE_URL=
 ```
+
+The `AUTH0_DOMAIN`, `AUTH0_CLIENT_ID`, and `AUTH0_CLIENT_SECRET` can be obtained from the [Auth0 Dashboard](https://manage.auth0.com) once you've created an application. **This application must be a `Regular Web Application`**.
+
+The `AUTH0_SECRET` is the key used to encrypt the session and transaction cookies. You can generate a secret using `openssl`:
+
+```shell
+openssl rand -hex 32
+```
+
+The `APP_BASE_URL` is the URL that your application is running on. When developing locally, this is most commonly `http://localhost:3000`.
+
+> [!IMPORTANT]
+> You will need to register the follwing URLs in your Auth0 Application via the [Auth0 Dashboard](https://manage.auth0.com):
+>
+> - Add `http://localhost:3000/auth/callback` to the list of **Allowed Callback URLs**
+> - Add `http://localhost:3000` to the list of **Allowed Logout URLs**
+
 
 Middleware file needed, exactly like NextJS docs:
 
@@ -57,7 +74,7 @@ export const config = {
 }
 ```
 
-**NOT LIVE YET**
+Installing the package
 
 ```
 npm install payload-auth0

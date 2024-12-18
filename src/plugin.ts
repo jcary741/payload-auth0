@@ -58,15 +58,6 @@ export const Auth0Plugin =
       // Add After login button
       const addAfterLoginComponent = (adminConfig: any): any => ({
         ...adminConfig,
-        // importMap: {
-        //   baseDir: path.resolve(dirname, '../src'),
-        // },
-        // dependencies: {
-        //   LoginButtonSSO: { // myTestComponent is the key - can be anything
-        //     path: '/src/components/LoginButton/index.tsx#default',
-        //     type: 'component',
-        //   },
-        // },
         components: {
           ...adminConfig.components,
           afterLogin: [

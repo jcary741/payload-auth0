@@ -10,7 +10,7 @@ type LoginButtonProps = {
 export const LoginButton = (props?: LoginButtonProps) => {
   const {
     text = "Log In with SSO",
-    href = process.env.REACT_APP_AUTH0_LOGIN_URL || "/auth/login",
+    href = "/auth/login",
   } = props || {};
   return (
     <a
