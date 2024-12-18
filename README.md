@@ -1,5 +1,6 @@
 # Payload Auth0 Plugin
 
+
 <a href="LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="Software License" />
 </a>
@@ -13,6 +14,8 @@
 
 [//]: # (</a>)
 
+## This Package is still in development and will likely change.
+
 # Features
 
 - ✅ Compatible with Payload v3
@@ -21,7 +24,40 @@
 
 # Installation
 
-NOT LIVE YET
+ENV fields needed: (subject to change an updates)
+```dotenv
+AUTH0_SECRET='{STRING}'
+AUTH0_BASE_URL='http://{URL}.com'
+AUTH0_ISSUER_BASE_URL='https://xxx-xxxxxxxxxxxxx.xx.auth0.com'
+AUTH0_CLIENT_ID='{STRING}'
+AUTH0_CLIENT_SECRET='{STRING}'
+AUTH0_CALLBACK="/api/users/auth/callback"
+
+
+AUTH0_DOMAIN='xxx-xxxxxxxxxxxxx.xx.auth0.com'
+APP_BASE_URL='https://{URL}.com'```
+
+```
+
+Middleware file needed, exactly like NextJS docs:
+
+```typescript
+import { NextRequest, NextResponse} from 'next/server'
+
+import { auth0 } from "payload-auth0/node"
+
+export async function middleware(request: NextRequest) {
+  return await auth0.middleware(request)
+}
+
+export const config = {
+  matcher: [
+    "/(auth|admin)/(login|logout|callback|profile|access-token|backchannel-logout)",
+  ],
+}
+```
+
+**NOT LIVE YET**
 
 ```
 npm install payload-auth0
