@@ -22,6 +22,16 @@
 - 🔐 Configures Auth0 login with payload CMS
 
 
+# Wishlist/Roadmap
+
+- Able to change the collection auth settings.
+- Ability to customize login button.
+- Auto login functionality.
+- Reduce the size of the package if possible.
+- Increase the testing coverage.
+- ... any other fixes
+
+
 # Installation
 
 This package uses the [NextJs Auth0](https://github.com/auth0/nextjs-auth0) plugin currently a beta version and adds the Payload Auth around it so
