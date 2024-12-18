@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@payload-auth0/*": [
+      "payload-auth0/*": [
         "./src/*"
       ]
     },

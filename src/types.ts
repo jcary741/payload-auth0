@@ -1,3 +1,5 @@
+import { PayloadComponent } from "payload";
+
 export interface PluginTypes {
   /**
    * Enable or disable plugin
@@ -5,8 +7,7 @@ export interface PluginTypes {
    */
   enabled?: boolean;
 
-  strategyName: string;
-
+  strategyName?: string;
 
   /**
    * The Collection that the Publish Authorisation will be added to
@@ -18,7 +19,13 @@ export interface PluginTypes {
 
   useEmailAsIdentity?: boolean;
 
+  button?: ButtonTypes;
+}
 
+export interface ButtonTypes {
+  text?: string;
+  className?: string;
+  component?: PayloadComponent
 }
 
 export interface NewCollectionTypes {

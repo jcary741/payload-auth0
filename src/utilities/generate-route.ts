@@ -1,10 +1,6 @@
 // /////////////////////////////////////////////////
 // Generate cookie from session data here...
 // /////////////////////////////////////////////////
-
-
-// import { getPayload } from 'payload'
-// import config from '@/payload.config'
 import { auth0 } from "./AuthClient"
 import { NextResponse } from 'next/server'
 

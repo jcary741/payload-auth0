@@ -92,6 +92,25 @@ yarn install payload-auth0
 pnpm install payload-auth0
 ```
 
+### Plugin Options
+
+*Note: There are more options defined however they all are not all tested or implemented correctly.*
+
+```typescript jsx
+{
+  enabled: boolean;
+
+  strategyName: string;
+
+  button = {
+    component: PayloadComponent,
+    text: string,
+    className: string
+  };
+}
+```
+
+
 # Contributing
 
   More to come

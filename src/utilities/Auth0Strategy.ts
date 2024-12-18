@@ -21,7 +21,6 @@ export const createAuthStrategy = (
 
 
 export const Auth0Strategy = async ({payload, headers}: {payload: Payload, headers: Headers}): Promise<AuthStrategyResult> => {
-
   const cookie = parseCookies(headers);
   const token = cookie.get(`${payload.config.cookiePrefix}-token`);
   if (!token) return { user: null };
@@ -52,7 +51,6 @@ export const Auth0Strategy = async ({payload, headers}: {payload: Payload, heade
   // Find or create user in the database
   // //////////////////////////////////////
   let verifiedUser = await findOrCreateUser(payload, collectionSlug, jwtUser) as User;
-
   return { user: verifiedUser || null }
 }
 
