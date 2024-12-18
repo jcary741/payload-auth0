@@ -1,3 +1,5 @@
+// Not used as actually increases the bundle size
+
 import esbuild from "esbuild";
 import glob from "fast-glob";
 

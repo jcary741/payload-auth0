@@ -1,6 +1,6 @@
 {
   "name": "payload-auth0",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "type": "module",
   "homepage:": "https://payloadcms.com",
   "repository": "",
@@ -36,7 +36,7 @@
     "dev": "cd dev && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "dev:build": "cross-env NODE_OPTIONS=--no-deprecation next build dev",
     "dev:start": "cross-env NODE_OPTIONS=--no-deprecation next start dev",
-    "build": "tsc --noEmit && node build.js",
+    "build": "tsc",
     "test": "cd test && jest --config=./jest.config.js",
     "format": "prettier --write src dev",
     "payload": "cd dev && cross-env NODE_OPTIONS=--no-deprecation payload",
