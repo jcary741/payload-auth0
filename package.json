@@ -1,0 +1,92 @@
+{
+  "name": "payload-auth0",
+  "version": "0.0.1",
+  "type": "module",
+  "homepage:": "https://payloadcms.com",
+  "repository": "",
+  "description": "Auth0 plugin for Payload CMS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "payload",
+    "cms",
+    "plugin",
+    "typescript",
+    "react",
+    "auth0",
+    "sso",
+    "payload-plugin"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./node": {
+      "import": "./dist/exports/node.js",
+      "types": "./dist/exports/node.d.ts",
+      "default": "./dist/exports/node.js"
+    }
+  },
+  "scripts": {
+    "dev": "cd dev && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "dev:build": "cross-env NODE_OPTIONS=--no-deprecation next build dev",
+    "dev:start": "cross-env NODE_OPTIONS=--no-deprecation next start dev",
+    "build": "tsc",
+    "test": "cd test && jest --config=./jest.config.js",
+    "format": "prettier --write src dev",
+    "payload": "cd dev && cross-env NODE_OPTIONS=--no-deprecation payload",
+    "dev:lint": "cd dev && cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "generate:types": "cd dev && payload generate:types",
+    "generate:importmap": "cd dev && payload generate:importmap",
+    "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
+    "clean": "rimraf dist && rimraf dev/.next",
+    "prepublishOnly": "pnpm clean && pnpm build",
+    "prepare": "tsc"
+  },
+  "author": "chris.alwin@youngshand.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "payload": "3.8.0"
+  },
+  "devDependencies": {
+    "@payloadcms/ui": "3.8.0",
+
+
+    "@payloadcms/next": "3.8.0",
+    "@payloadcms/richtext-lexical": "3.8.0",
+    "cross-env": "^7.0.3",
+    "next": "15.1.0",
+    "payload": "3.8.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "sharp": "0.32.6",
+    "@payloadcms/db-sqlite": "3.8.0",
+
+
+    "@swc/jest": "0.2.36",
+    "@types/jest": "29.5.12",
+    "@types/jsonwebtoken": "9.0.6",
+    "@types/react": "18.3.3",
+    "dotenv": "16.4.5",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.2.3",
+    "jest": "29.7.0",
+    "libsql": "0.4.6",
+    "prettier": "3.3.2",
+    "prettier-plugin-organize-imports": "3.2.4",
+    "puppeteer": "^23.6.0",
+
+    "rimraf": "5.0.7",
+    "tree-kill": "^1.2.2",
+    "typescript": "5.4.5"
+  },
+  "dependencies": {
+    "@auth0/nextjs-auth0": "^4.0.0-beta.11",
+    "jsonwebtoken": "9.0.2"
+  }
+}
