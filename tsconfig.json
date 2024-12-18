@@ -22,7 +22,8 @@
     "declarationDir": "./dist",
     "skipLibCheck": true,
     "strict": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*"]
 }

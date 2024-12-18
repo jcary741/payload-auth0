@@ -55,8 +55,6 @@
   },
   "devDependencies": {
     "@payloadcms/ui": "3.8.0",
-
-
     "@payloadcms/next": "3.8.0",
     "@payloadcms/richtext-lexical": "3.8.0",
     "cross-env": "^7.0.3",
@@ -66,8 +64,6 @@
     "react-dom": "19.0.0",
     "sharp": "0.32.6",
     "@payloadcms/db-sqlite": "3.8.0",
-
-
     "@swc/jest": "0.2.36",
     "@types/jest": "29.5.12",
     "@types/jsonwebtoken": "9.0.6",
@@ -80,7 +76,6 @@
     "prettier": "3.3.2",
     "prettier-plugin-organize-imports": "3.2.4",
     "puppeteer": "^23.6.0",
-
     "rimraf": "5.0.7",
     "tree-kill": "^1.2.2",
     "typescript": "5.4.5"
