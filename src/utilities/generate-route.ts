@@ -8,51 +8,80 @@ import {
   CollectionSlug,
   PayloadRequest,
   generatePayloadCookie,
-  getFieldsToSign, User
+  getFieldsToSign,
+  User, Payload
 } from "payload";
-import { findOrCreateUser } from "./Auth0Strategy";
+import { findOrRegisterUser } from "./Auth0Strategy";
 import jwt from "jsonwebtoken";
 
-export async function generateRoute(req: PayloadRequest) {
-  const session = await auth0.getSession();
-  const payload = await req.payload;
+const collectionSlug: CollectionSlug = "users"; // Extracted as constant
 
-  const collectionSlug = "users" as CollectionSlug;
-  const collectionConfig = payload.collections[collectionSlug].config;
-  const payloadConfig = payload.config;
-
-  const userInfo = {
-    email: session?.user?.email,
-    sub: session?.user?.sub,
-  };
-
-  const checkUser = {
-    ...await findOrCreateUser(payload, collectionSlug, userInfo),
+/**
+ * Creates and returns a signed session token for a user.
+ * Extracted to simplify the main logic of `generateRoute`.
+ */
+async function createUserSessionToken(
+  payload: Payload,
+  collectionConfig: any,
+  secret: string,
+  userInfo: { email?: string; sub?: string }
+): Promise<string> {
+  // Find or create the user
+  const existingUser = {
+    ...await findOrRegisterUser(payload, collectionSlug, userInfo),
     collection: collectionSlug
   } as User;
 
-  const fieldsToSign = getFieldsToSign({
+  // Get fields required for the token signature
+  const signedFields = getFieldsToSign({
     collectionConfig,
-    email: checkUser.email || "",
-    user: checkUser,
+    email: existingUser.email || "",
+    user: existingUser
   });
 
-  const token = jwt.sign(fieldsToSign, payload.secret, {
-    expiresIn: collectionConfig.auth.tokenExpiration,
+  // Sign the token
+  return jwt.sign(signedFields, secret, {
+    expiresIn: collectionConfig.auth.tokenExpiration
   });
+}
 
-  // /////////////////////////////////////
-  // Generate and set cookie
-  // /////////////////////////////////////
+// Main route generation function
+export async function generateRoute(req: PayloadRequest) {
+  const session = await auth0.getSession();
+  if (!session?.user) {
+    throw new Error("User session not found");
+  }
+
+  const { payload } = req;
+  const collectionConfig = payload.collections[collectionSlug].config;
+  const payloadConfig = payload.config;
+
+  // Extract user info from the session
+  const userInfo = {
+    email: session.user.email,
+    sub: session.user.sub
+  };
+
+  // Generate the session token
+  const token = await createUserSessionToken(
+    payload,
+    collectionConfig,
+    payload.secret,
+    userInfo
+  );
+
+  // Generate the payload cookie
   const cookie = generatePayloadCookie({
     collectionAuthConfig: collectionConfig.auth,
     cookiePrefix: payloadConfig.cookiePrefix,
-    token,
+    token
   });
 
-  return NextResponse.redirect(new URL("/admin", process.env.APP_BASE_URL), {
+  // Redirect to admin with the generated cookie
+  const redirectUrl = new URL("/admin", process.env.APP_BASE_URL); // Extracted as constant
+  return NextResponse.redirect(redirectUrl, {
     headers: {
-      "Set-Cookie": cookie,
-    },
+      "Set-Cookie": cookie
+    }
   });
 }

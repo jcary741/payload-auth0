@@ -8,93 +8,68 @@ export const modifyAuthCollection = (
   existingCollectionConfig: CollectionConfig,
   subFieldName: string,
 ): CollectionConfig => {
-  // /////////////////////////////////////
-  // modify fields
-  // /////////////////////////////////////
+  const EMAIL_FIELD_NAME = "email";
+  const SUB_FIELD_NAME = subFieldName;
 
-  // add sub fields
-  const fields = existingCollectionConfig.fields || [];
-  const existingSubField = fields.find(
-    (field) => "name" in field && field.name === subFieldName,
-  );
-  if (!existingSubField) {
-    fields.push({
-      name: subFieldName,
-      type: "text",
-      index: true,
-      access: {
-        read: () => true,
-        create: () => true,
-        update: () => false,
-      },
-    });
-  }
-
-  // add email field if disableLocalStrategy is set
-  // and we don't have an email field
-  if (
-    typeof existingCollectionConfig.auth !== "boolean" &&
-    existingCollectionConfig.auth !== undefined &&
-    existingCollectionConfig.auth.disableLocalStrategy === true &&
-    pluginOptions.useEmailAsIdentity === true &&
-    fields.every((field: any) => field.name !== "email")
-  ) {
-    const existingEmailField = fields.find(
-      (field) => "name" in field && field.name === "email",
-    );
-    if (!existingEmailField) {
-      fields.push({
-        name: "email",
-        type: "email",
-        required: true,
-        unique: true,
-        index: true,
-      });
+  // Helper function: Add field if missing
+  const addField = (fields: any[], fieldConfig: any, fieldName: string) => {
+    if (!fields.some((field) => "name" in field && field.name === fieldName)) {
+      fields.push(fieldConfig);
     }
+  };
+
+  // Update fields
+  const updatedFields = existingCollectionConfig.fields || [];
+
+  // Add sub field
+  addField(updatedFields, {
+    name: SUB_FIELD_NAME,
+    type: "text",
+    index: true,
+    access: {
+      read: () => true,
+      create: () => true,
+      update: () => false,
+    },
+  }, SUB_FIELD_NAME);
+
+  // Add email field if necessary
+  const shouldAddEmailField =
+    existingCollectionConfig.auth !== undefined &&
+    typeof existingCollectionConfig.auth !== "boolean" &&
+    existingCollectionConfig.auth.disableLocalStrategy === true &&
+    pluginOptions.useEmailAsIdentity === true;
+
+  if (shouldAddEmailField) {
+    addField(updatedFields, {
+      name: EMAIL_FIELD_NAME,
+      type: "email",
+      required: true,
+      unique: true,
+      index: true,
+    }, EMAIL_FIELD_NAME);
   }
 
-  // /////////////////////////////////////
-  // modify strategies
-  // /////////////////////////////////////
+  // Update strategies
+  const authStrategy = createAuthStrategy(pluginOptions, SUB_FIELD_NAME);
+    const existingStrategies =
+    typeof existingCollectionConfig?.auth === "object" &&
+    existingCollectionConfig?.auth !== null &&
+    Array.isArray(existingCollectionConfig.auth.strategies)
+      ? existingCollectionConfig.auth.strategies
+      : [];
+  const updatedStrategies = [...existingStrategies, authStrategy];
 
-  const authStrategy = createAuthStrategy(pluginOptions, subFieldName);
-  let strategies: AuthStrategy[] = [];
-  if (
-    typeof existingCollectionConfig.auth === "boolean" ||
-    existingCollectionConfig.auth === undefined
-  ) {
-    strategies = [];
-  } else if (Array.isArray(existingCollectionConfig.auth.strategies)) {
-    strategies = existingCollectionConfig.auth.strategies || [];
-  }
-  strategies.push(authStrategy);
-
-  // // /////////////////////////////////////
-  // // modify endpoints
-  // // /////////////////////////////////////
-
-  // Don't need this as middleware is set
-
-  // const endpoints = existingCollectionConfig.endpoints || [];
-  // endpoints.push(createAuthorizeEndpoint(pluginOptions));
-  // endpoints.push(createCallbackEndpoint(pluginOptions));
-
-  // endpoints.push(createAuth0Endpoints(pluginOptions));
-  // endpoints.push(createCallbackEndpoint(pluginOptions));
-
-  // console.log("endpoints", endpoints);
-
-
+  // Return updated collection config
   return {
     ...existingCollectionConfig,
-    fields,
-    // endpoints,
+    fields: updatedFields,
     auth: {
       ...(typeof existingCollectionConfig.auth === "object" &&
       existingCollectionConfig.auth !== null
         ? existingCollectionConfig.auth
         : {}),
-      strategies,
+      strategies: updatedStrategies,
     },
   };
 };
