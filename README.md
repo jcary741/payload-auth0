@@ -25,7 +25,7 @@
 # Wishlist/Roadmap
 
 - Able to change the collection auth settings.
-- Ability to customize login button.
+- ~~Ability to customize login button.~~
 - Auto login functionality.
 - Reduce the size of the package if possible.
 - Increase the testing coverage.
