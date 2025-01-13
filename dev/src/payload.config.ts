@@ -34,7 +34,12 @@ export default buildConfig({
   sharp,
   plugins: [
     Auth0Plugin({
-      strategyName: "auth0"
+      strategyName: "auth0",
+      enabled: true,
+      // Map fields to be kept up to date with the provider
+      mapMetaFields: {
+        Name: "Name"
+      }
     })
     // storage-adapter-placeholder
   ],

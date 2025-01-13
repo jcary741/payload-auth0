@@ -24,6 +24,7 @@
 
 # Wishlist/Roadmap
 
+- Add meta-data support and syncing
 - Able to change the collection auth settings.
 - ~~Ability to customize login button.~~
 - Auto login functionality.

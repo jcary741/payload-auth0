@@ -4,9 +4,8 @@ import type { PluginTypes } from "./types";
 import { generateRoute } from "./utilities/generate-route";
 import { modifyAuthCollection } from "./utilities/modify-auth-collection";
 
-export const Auth0Plugin =
-  (pluginOptions: PluginTypes): Plugin =>
-  (incomingConfig) => {
+export const Auth0Plugin = (pluginOptions: PluginTypes): Plugin => {
+  return (incomingConfig) => {
     let config = { ...incomingConfig };
 
     if (pluginOptions.enabled === false) {
@@ -58,12 +57,13 @@ export const Auth0Plugin =
         afterLogin: [
           ...(adminConfig.components?.afterLogin || []),
           // "payload-auth0#LoginButton",
-          pluginOptions?.button?.component ||
-          {
+          pluginOptions?.button?.component || {
             path: "payload-auth0#LoginButton",
             clientProps: {
               text: pluginOptions?.button?.text || "Login with Auth0",
-              className: pluginOptions?.button?.className || "btn btn--style-secondary btn--icon-style-without-border btn--size-medium",
+              className:
+                pluginOptions?.button?.className ||
+                "btn btn--style-secondary btn--icon-style-without-border btn--size-medium",
             },
           },
         ],
@@ -76,5 +76,6 @@ export const Auth0Plugin =
 
     return config;
   };
+};
 
 export default Auth0Plugin;

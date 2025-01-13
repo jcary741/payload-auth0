@@ -20,6 +20,12 @@ export interface PluginTypes {
   useEmailAsIdentity?: boolean;
 
   button?: ButtonTypes;
+
+
+  /**
+   * Object to map exisisting fields to the User Collection
+   */
+  mapMetaFields?: object
 }
 
 export interface ButtonTypes {
