@@ -1,4 +1,5 @@
-import { PayloadComponent } from "payload";
+import { BasePayload, Payload, PayloadComponent } from "payload";
+import { SessionData } from "@auth0/nextjs-auth0/types";
 
 export interface PluginTypes {
   /**
@@ -23,9 +24,19 @@ export interface PluginTypes {
 
 
   /**
-   * Object to map exisisting fields to the User Collection
+   * Object to map existing fields to the User Collection
    */
   mapMetaFields?: object
+
+
+  // Hooks to run functions at points
+  hooks?: PluginHooks
+}
+
+interface PluginHooks {
+  afterLogin?: {
+    handler: (session: SessionData, payload: BasePayload) => void;
+  };
 }
 
 export interface ButtonTypes {

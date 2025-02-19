@@ -44,7 +44,7 @@ export const Auth0Plugin = (pluginOptions: PluginTypes): Plugin => {
         path: "/auth0/generate",
         method: "get",
         handler: async (req) => {
-          return await generateRoute(req);
+          return await generateRoute(req, pluginOptions);
         },
       },
     ];

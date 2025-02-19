@@ -13,6 +13,7 @@ import {
 } from "payload";
 import { findOrRegisterUser } from "./Auth0Strategy";
 import jwt from "jsonwebtoken";
+import { PluginTypes } from "../types";
 
 const collectionSlug: CollectionSlug = "users"; // Extracted as constant
 
@@ -46,7 +47,7 @@ async function createUserSessionToken(
 }
 
 // Main route generation function
-export async function generateRoute(req: PayloadRequest) {
+export async function generateRoute(req: PayloadRequest, config: PluginTypes) {
   const session = await auth0.getSession();
   if (!session?.user) {
     throw new Error("User session not found");
@@ -55,12 +56,17 @@ export async function generateRoute(req: PayloadRequest) {
   const { payload } = req;
   const collectionConfig = payload.collections[collectionSlug].config;
   const payloadConfig = payload.config;
-
   // Extract user info from the session
   const userInfo = {
     email: session.user.email,
     sub: session.user.sub
   };
+
+  // if config hooks.afterlogin
+  if (config?.hooks && config?.hooks?.afterLogin) {
+    config?.hooks?.afterLogin?.handler(session, payload)
+  }
+
 
   // Generate the session token
   const token = await createUserSessionToken(

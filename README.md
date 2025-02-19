@@ -24,7 +24,7 @@
 
 # Wishlist/Roadmap
 
-- Add meta-data support and syncing
+- ~~Add meta-data support and syncing~~
 - Able to change the collection auth settings.
 - ~~Ability to customize login button.~~
 - Auto login functionality.
@@ -108,6 +108,12 @@ pnpm install payload-auth0
     text: string,
     className: string
   };
+
+  hooks: {
+    afterLogin: {
+      handler(session, payload)
+    }
+  }
 }
 ```
 
