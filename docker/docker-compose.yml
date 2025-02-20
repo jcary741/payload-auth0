@@ -1,10 +1,11 @@
 services:
   package:
-    build:
-      context: ../
-      dockerfile: ./docker/Dockerfile
-      target: dev
-    command: npm run dev
+    image: node:22-alpine
+#    build:
+#      context: ../
+#      dockerfile: ./docker/Dockerfile
+#      target: dev
+    command: tail -f /dev/null
     stdin_open: true
     tty: true
     volumes:
