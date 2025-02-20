@@ -9,7 +9,7 @@ export const modifyAuthCollection = (
   subFieldName: string,
 ): CollectionConfig => {
   const EMAIL_FIELD_NAME = "email";
-  const SUB_FIELD_NAME = subFieldName;
+  const SUB_FIELD_NAME = subFieldName || "sub";
 
   // Helper function: Add field if missing
   const addField = (fields: any[], fieldConfig: any, fieldName: string) => {
