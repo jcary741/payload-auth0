@@ -88,9 +88,9 @@ export const config = {
 Installing the package
 
 ```
-npm install payload-auth0
-yarn install payload-auth0
-pnpm install payload-auth0
+npm install @youngshand/payload-auth0
+yarn install @youngshand/payload-auth0
+pnpm install @youngshand/payload-auth0
 ```
 
 ### Plugin Options
