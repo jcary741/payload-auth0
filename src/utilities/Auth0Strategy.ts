@@ -1,4 +1,4 @@
-import { AuthStrategy, AuthStrategyResult, JsonObject, parseCookies, TypeWithID, User } from "payload";
+import { AuthStrategy, AuthStrategyResult, JsonObject, parseCookies, TypeWithID } from "payload";
 import type { CollectionSlug, Payload } from "payload";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
