@@ -26,7 +26,7 @@ const Page = () => {
 
       <p>
         <strong>
-          Payload is running at <Link href="/admin">/admin</Link>
+          Payload is running at <Link href="/admin">/admin</Link> This is to test the package Auth0-Payload
         </strong>
       </p>
 

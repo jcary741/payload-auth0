@@ -1,0 +1,23 @@
+services:
+  package:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      target: dev
+    command: npm run dev
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../:/app
+      - node_modules:/app/node_modules
+    labels:
+      caddy: api.payload.test
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+      caddy.tls: "internal"
+    networks:
+      - caddy
+networks:
+  caddy:
+    external: true
+volumes:
+  node_modules:
