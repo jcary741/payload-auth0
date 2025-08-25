@@ -20,6 +20,7 @@ const esModules = [
   '@payloadcms/translations',
   '@payloadcms/db-mongodb',
   '@payloadcms/richtext-lexical',
+  '@borewit/text-codec'
 ].join('|')
 
 /** @type {import('jest').Config} */
